@@ -33,19 +33,19 @@ describe('server', function() {
     });
   });
 
-  it('should accept POST requests to /send', function(done) {
-    var requestParams = {method: 'POST',
-      uri: 'http://127.0.0.1:3000/classes/messages',
-      json: {
-        username: 'Jono',
-        message: 'Do my bidding!'}
-    };
+  // it('should accept POST requests to /send', function(done) {
+  //   var requestParams = {method: 'POST',
+  //     uri: 'http://127.0.0.1:3000/classes/messages',
+  //     json: {
+  //       username: 'Jono',
+  //       message: 'Do my bidding!'}
+  //   };
 
-    request(requestParams, function(error, response, body) {
-      expect(response.statusCode).to.equal(201);
-      done();
-    });
-  });
+  //   request(requestParams, function(error, response, body) {
+  //     expect(response.statusCode).to.equal(201);
+  //     done();
+  //   });
+  // });
 
   it('should respond with messages that were previously posted', function(done) {
     var requestParams = {method: 'POST',
