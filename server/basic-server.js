@@ -43,8 +43,21 @@
 var express = require('express');
 var app = express();
 var requestHandler = require('./request-handler');
+var bodyParser = require('body-parser');
+app.use(express.static('client'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended:true
+}));
 
-app.use(express.static('static'));
+app.post('/classes/messages', function(req, res){
+  console.log(req.body);
+  res.send(req.body);
+})
+
+app.get('/classes/messages', function(req,res){
+  res.send(JSON.stringify({results:[]}));
+})
 
 var server = app.listen(3000, '127.0.0.1', function() {
   var host = server.address().address;
