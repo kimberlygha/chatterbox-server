@@ -11,40 +11,59 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
-var messages = {results: []};
+var messages = {results: [{
+  objectId: 1,
+  username: 'Jo',
+  text: 'HelloWorld',
+  roomname: 'Lobby'
+}]};
+var objectId = 2;
 var requestHandler = function(request, response) {
 
-  console.log("Serving request type " + request.method + " for url " + request.url);
+//   console.log("Serving request type " + request.method + " for url " + request.url);
 
-  if(request.url !== '/classes/messages') {
-    response.writeHead(404, defaultCorsHeaders);
-    response.end();
-  }
+//   if(request.url !== '/classes/messages') {
+//     response.writeHead(404, defaultCorsHeaders);
+//     response.end();
+//   }
 
-  var statusCode = 200;
-  var headers = defaultCorsHeaders;
-  headers['Content-Type'] = "text/plain";
+//   var statusCode = 200;
+//   var headers = defaultCorsHeaders;
+//   headers['Content-Type'] = "text/plain";
 
-  if(request.method === 'GET') {
-    //respond with messages
-  response.writeHead(statusCode, headers);
-  response.end(JSON.stringify(messages));
+//   if(request.method === 'GET') {
+//     //respond with messages
+//   response.writeHead(statusCode, headers);
+//   response.end(JSON.stringify(messages));
 
-  } else if (request.method === 'POST') {
-    //add message into messages
-    request.on('data', function(res) {
-      console.log('The request contained: ' + JSON.parse(res));
-      messages.results.push(JSON.parse(res));
-      console.log(messages.results);
-    });
-    request.on('end', function(){
-      console.log('end');
-      response.writeHead(201, headers)
-      response.end(JSON.stringify(messages));
-    });
-    // console.log(request.body);
-    // })
-  }
+//   } else if (request.method === 'POST') {
+//     //add message into messages
+//     request.on('data', function(res) {
+//       // console.log('The request contained: ' + JSON.parse(res));
+//       // messages.results.push(JSON.parse(res));
+//       var parsedData = JSON.parse(res);
+//       console.log('The request contained: ' + parsedData);
+//       objectId++;
+//       parsedData.objectId = objectId;
+//       messages.results.push(parsedData);
+//       console.log(messages.results);
+//     });
+//     request.on('end', function(){
+//       console.log('end');
+//       response.writeHead(201, headers)
+//       response.end(JSON.stringify(messages));
+//     });
+//     // console.log(request.body);
+//     // })
+//   }
+
+  app.get('/classes/messages', function(req, res) {
+    res.send(JSON.stringify(messages));
+  });
+
+  app.post('/classes/messages', function(req, res) {
+    console.log(req.body);
+  });
 
   // Request and Response come from node's http module.
   //

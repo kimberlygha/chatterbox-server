@@ -26,11 +26,11 @@ var app = {
     app.$roomSelect.on('change', app.saveRoom);
 
     // Fetch previous messages
-    app.stopSpinner();
+    app.startSpinner();
     app.fetch(false);
 
     // Poll for new messages
-    //setInterval(app.fetch, 3000);
+    setInterval(app.fetch, 3000);
   },
 
   send: function(data) {
@@ -61,8 +61,8 @@ var app = {
       contentType: "text/plain",
       success: function(data) {
         // Don't bother if we have nothing to work with
-        console.dir(JSON.parse(data));
-        if (!data.results || !data.results.length) { return; }
+        data = JSON.parse(data);
+        if (!data.results || !data.results.length) { console.log('not returning');return; }
 
         // Get the last message
         var mostRecentMessage = data.results[data.results.length-1];
@@ -226,11 +226,11 @@ var app = {
 
   startSpinner: function(){
     $('.spinner img').show();
-    $('form input[type=submit]').attr('disabled', "true");
+    // $('form input[type=submit]').attr('disabled', "true");
   },
 
   stopSpinner: function(){
     $('.spinner img').fadeOut('fast');
-    $('form input[type=submit]').attr('disabled', null);
+    // $('form input[type=submit]').attr('disabled', null);
   }
 };
