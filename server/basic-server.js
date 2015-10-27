@@ -44,20 +44,38 @@ var express = require('express');
 var app = express();
 var requestHandler = require('./request-handler');
 var bodyParser = require('body-parser');
-app.use(express.static('client'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended:true
-}));
 
-app.post('/classes/messages', function(req, res){
-  console.log(req.body);
-  res.send(req.body);
-})
+// var messages = {results: [{
+//   objectId: 1,
+//   username: 'Jo',
+//   text: 'HelloWorld',
+//   roomname: 'Lobby'
+// }]};
+// var objectId = 2;
 
-app.get('/classes/messages', function(req,res){
-  res.send(JSON.stringify({results:[]}));
-})
+app.use('/', express.static('client'));
+
+app.use(function(req, res, next) {
+  bodyParser.json();
+  bodyParser.urlencoded({
+    extended:true
+  });
+  console.log('body-parser has run');
+  next();
+});
+
+// app.post('/classes/messages', function(req, res){
+//   console.log(req.body);
+//   res.send(req.body);
+// })
+
+// app.get('/classes/messages', function(req,res){
+//   res.send(JSON.stringify({results:[]}));
+// })
+
+app.post('/classes/messages', requestHandler.requestHandler);
+
+app.get('/classes/messages', requestHandler.requestHandler);
 
 var server = app.listen(3000, '127.0.0.1', function() {
   var host = server.address().address;
