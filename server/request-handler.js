@@ -11,12 +11,20 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
-var messages = {results: [{
-  objectId: 1,
-  username: 'Jo',
-  text: 'HelloWorld',
-  roomname: 'Lobby'
-}]};
+var messages = {
+  results: [{
+    objectId: 1,
+    username: 'Jo',
+    text: 'HelloWorld',
+    roomname: 'Lobby'
+  }],
+  users: {
+    'Joe': true
+  },
+  rooms: {
+    'Lobby': true
+  }
+};
 var objectId = 2;
 var requestHandler = function(request, response) {
 

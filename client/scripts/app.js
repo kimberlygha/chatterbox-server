@@ -31,6 +31,14 @@ var app = {
 
     // Poll for new messages
     setInterval(app.fetch, 3000);
+    if (!/(&|\?)username=/.test(window.location.search)) {
+      var newSearch = window.location.search;
+      if (newSearch !== '' & newSearch !== '?') {
+        newSearch += '&';
+      }
+      newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
+      window.location.search = newSearch;
+    }
   },
 
   send: function(data) {
